@@ -53,7 +53,10 @@ export function Navbar() {
           <div className="flex items-center gap-4">
             {session?.user ? (
               <button
-                onClick={() => signOut()}
+                onClick={() => {
+                  useCart.getState().clearCart();
+                  signOut();
+                }}
                 className="hidden md:block text-sm text-gray-400 hover:text-white transition-colors"
               >
                 Sign Out
@@ -97,7 +100,7 @@ export function Navbar() {
               {(session?.user as { role?: string })?.role === "ADMIN" && (
                 <Link href="/admin" className="text-sm text-purple-400 hover:text-purple-300 font-bold" onClick={() => setMobileOpen(false)}>Admin Panel</Link>
               )}
-              <button onClick={() => { signOut(); setMobileOpen(false); }} className="text-sm text-gray-300 hover:text-white text-left">Sign Out</button>
+              <button onClick={() => { useCart.getState().clearCart(); signOut(); setMobileOpen(false); }} className="text-sm text-gray-300 hover:text-white text-left">Sign Out</button>
             </>
           ) : (
             <Link href="/login" className="text-sm text-gray-300 hover:text-white" onClick={() => setMobileOpen(false)}>Sign In</Link>
