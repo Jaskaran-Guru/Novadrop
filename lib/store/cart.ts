@@ -41,6 +41,17 @@ export const useCart = create<CartStore>()(
         } else {
           set({ items: [...get().items, item] });
         }
+
+        // Real-time tracking for admin dashboard
+        fetch("/api/analytics", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ 
+            eventType: "add_to_cart", 
+            metadata: { productId: item.productId, name: item.name, price: item.price },
+            page: window.location.pathname
+          })
+        }).catch(() => {});
       },
 
       removeItem: (productId) =>

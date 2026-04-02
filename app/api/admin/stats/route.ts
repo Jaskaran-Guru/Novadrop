@@ -16,7 +16,6 @@ export async function GET() {
       funnelEvents,
       campaignStats,
       ordersByDay,
-      topProducts,
     ] = await Promise.all([
       prisma.order.count({ where: { status: { in: ["PAID", "DELIVERED", "SHIPPED"] } } }),
       prisma.order.aggregate({
@@ -54,12 +53,6 @@ export async function GET() {
         },
         orderBy: { createdAt: "asc" },
       }),
-      prisma.orderItem.groupBy({
-        by: ["productId"],
-        _sum: { quantity: true },
-        orderBy: { _sum: { quantity: "desc" } },
-        take: 5,
-      }),
     ]);
 
     const totalRevenueVal = totalRevenue._sum.total || 0;
@@ -75,7 +68,6 @@ export async function GET() {
       ? ((funnelMap["purchase"] || 0) / funnelMap["page_view"]) * 100
       : 0;
 
-    // Process daily orders for chart
     const dailyData: Record<string, { date: string; orders: number; revenue: number }> = {};
     ordersByDay.forEach((row: any) => {
       const date = new Date(row.createdAt).toLocaleDateString("en-IN", { month: "short", day: "numeric" });
@@ -84,8 +76,9 @@ export async function GET() {
       dailyData[date].revenue += row._sum.total || 0;
     });
 
+    // If no data exists in DB, fallback to mock stats and set mocked flag
     if (totalOrders === 0 && totalRevenueVal === 0) {
-      return NextResponse.json(FALLBACK_STATS);
+      return NextResponse.json({ ...FALLBACK_STATS, mocked: true });
     }
 
     return NextResponse.json({
@@ -106,10 +99,11 @@ export async function GET() {
         { step: "Purchase", count: funnelMap["purchase"] || 0 },
       ],
       dailyChart: Object.values(dailyData).slice(-14),
-      topProducts,
+      mocked: false
     });
   } catch (error) {
     console.error("Admin stats error:", error);
-    return NextResponse.json(FALLBACK_STATS);
+    // Silent fallback to simulation mode
+    return NextResponse.json({ ...FALLBACK_STATS, mocked: true });
   }
 }

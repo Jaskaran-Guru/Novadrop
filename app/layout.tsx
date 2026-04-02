@@ -20,6 +20,7 @@ export const metadata: Metadata = {
 };
 
 import { ABTestProvider } from "@/components/ABTestWrapper";
+import { MetaPixel } from "@/components/MetaPixel";
 
 export default function RootLayout({
   children,
@@ -27,10 +28,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" data-scroll-behavior="smooth">
       <body className={`${inter.variable} font-sans antialiased bg-[#0a0a0a] text-white`}>
         <SessionProvider>
           <ABTestProvider>
+            <MetaPixel />
             <Navbar />
             <main>{children}</main>
             <Toaster />

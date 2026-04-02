@@ -1,7 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { formatPrice, calculateCTR, calculateCPC, calculateROAS } from "@/lib/utils";
-import { TrendingUp, Eye, MousePointerClick, ShoppingCart } from "lucide-react";
+import { TrendingUp, MousePointerClick, ShoppingCart } from "lucide-react";
 import { FALLBACK_CAMPAIGNS } from "@/lib/seed-data";
+import { CampaignDialog } from "./CampaignDialog";
 
 async function getCampaigns() {
   try {
@@ -36,9 +37,12 @@ export default async function CampaignsPage() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-black">Ad Campaigns</h1>
-        <p className="text-gray-500">Meta Ads (FB/IG) performance metrics — validated through real A/B testing</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-black">Ad Campaigns</h1>
+          <p className="text-gray-500">Meta Ads (FB/IG) performance metrics — validated through real A/B testing</p>
+        </div>
+        <CampaignDialog mode="create" />
       </div>
 
       {/* Aggregate KPIs */}
@@ -64,7 +68,7 @@ export default async function CampaignsPage() {
         <table className="w-full min-w-[700px]">
           <thead>
             <tr className="border-b border-white/5">
-              {["Campaign", "Platform", "Status", "Spend", "Revenue", "ROAS", "CTR", "CPC", "Conversions", "Period"].map((h) => (
+              {["Campaign", "Platform", "Status", "Spend", "Revenue", "ROAS", "CTR", "CPC", "Conversions", "Period", "Actions"].map((h) => (
                 <th key={h} className="text-left px-4 py-4 text-xs text-gray-500 uppercase tracking-wider">{h}</th>
               ))}
             </tr>
@@ -102,6 +106,9 @@ export default async function CampaignsPage() {
                   <td className="px-4 py-4 text-xs text-gray-500">
                     {new Date(c.startDate).toLocaleDateString("en-IN", { month: "short", day: "numeric" })}
                     {c.endDate && ` — ${new Date(c.endDate).toLocaleDateString("en-IN", { month: "short", day: "numeric" })}`}
+                  </td>
+                  <td className="px-4 py-4">
+                    <CampaignDialog campaign={c} mode="edit" />
                   </td>
                 </tr>
               );

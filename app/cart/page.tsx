@@ -81,7 +81,7 @@ export default function CartPage() {
               <div key={item.id} className="glass rounded-2xl p-4 flex items-center gap-4">
                 <div className="w-20 h-20 rounded-xl overflow-hidden relative shrink-0 bg-purple-900/20">
                   {item.image ? (
-                    <Image src={item.image} alt={item.name} fill className="object-cover" />
+                    <Image src={item.image} alt={item.name} fill sizes="80px" className="object-cover" />
                   ) : (
                     <div className="w-full h-full bg-purple-900/20" />
                   )}

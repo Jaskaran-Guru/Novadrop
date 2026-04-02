@@ -64,7 +64,7 @@ export default async function HomePage() {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full text-sm text-purple-300 mb-8 fade-in">
             <TrendingUp className="w-4 h-4" />
-            <span>8+ Sales / Day · Conversion Optimised</span>
+            
           </div>
 
           {/* Headline */}
@@ -158,6 +158,7 @@ export default async function HomePage() {
                           src={product.images[0]}
                           alt={product.name}
                           fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                           className="object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       ) : (

@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -18,6 +19,7 @@ model User {
   password      String?
   image         String?
   role          Role      @default(CUSTOMER)
+  status        UserStatus @default(ACTIVE)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   orders        Order[]
@@ -167,4 +169,46 @@ enum OrderStatus {
   DELIVERED
   CANCELLED
   REFUNDED
+}
+
+model Experiment {
+  id            String         @id @default(cuid())
+  title         String
+  description   String?
+  status        ExperimentStatus @default(DRAFT)
+  trafficSplit  Int            @default(50) // Percentage directed to variant B
+  winnerId      String?        // ID of the winning LandingPage variant
+  startDate     DateTime?
+  endDate       DateTime?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  landingPages  LandingPage[]
+}
+
+model LandingPage {
+  id           String      @id @default(cuid())
+  experimentId String?
+  experiment   Experiment? @relation(fields: [experimentId], references: [id], onDelete: SetNull)
+  slug         String      @unique
+  variantType  String      @default("A") // "A" or "B"
+  title        String
+  contentBlocks Json?
+  isActive     Boolean     @default(true)
+  views        Int         @default(0)
+  conversions  Int         @default(0)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+enum ExperimentStatus {
+  DRAFT
+  RUNNING
+  COMPLETED
+  PAUSED
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
 }

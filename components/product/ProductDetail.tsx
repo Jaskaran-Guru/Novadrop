@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useCart } from "@/lib/store/cart";
 import { formatPrice } from "@/lib/utils";
 import { trackEvent } from "@/lib/utm";
-import { ShoppingCart, Plus, Minus, Zap, Star, Check } from "lucide-react";
+import { ShoppingCart, Plus, Minus, Zap, Star, Check, Loader2 } from "lucide-react";
 import Image from "next/image";
 
 interface Product {
@@ -26,6 +26,39 @@ export function ProductDetail({ product }: { product: Product }) {
   const [selectedVariant, setSelectedVariant] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const [added, setAdded] = useState(false);
+  const [buying, setBuying] = useState(false);
+
+  const handleBuyNow = async () => {
+    setBuying(true);
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: [{
+            id: `${product.id}-${selectedVariant || "default"}`,
+            productId: product.id,
+            name: product.name,
+            price: product.price,
+            image: product.images[0] || "",
+            quantity,
+            variant: selectedVariant || undefined,
+          }],
+          customerEmail: "guest@example.com",
+          customerName: "Guest User",
+        }),
+      });
+
+      const data = await response.json();
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch (error) {
+      console.error("Buy now failed:", error);
+    } finally {
+      setBuying(false);
+    }
+  };
 
   const handleAddToCart = () => {
     addItem({
@@ -57,7 +90,7 @@ export function ProductDetail({ product }: { product: Product }) {
       <div className="space-y-4">
         <div className="aspect-square glass rounded-2xl overflow-hidden relative">
           {product.images[selectedImage] ? (
-            <Image src={product.images[selectedImage]} alt={product.name} fill className="object-cover" />
+            <Image src={product.images[selectedImage]} alt={product.name} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
               <Zap className="w-20 h-20 text-purple-400/20" />
@@ -151,23 +184,37 @@ export function ProductDetail({ product }: { product: Product }) {
         </div>
 
         {/* Add to Cart */}
-        <button
-          onClick={handleAddToCart}
-          disabled={product.inventory === 0 || added}
-          className={`w-full flex items-center justify-center gap-2 font-semibold py-4 rounded-xl transition-all duration-200 ${
-            added
-              ? "bg-green-600 text-white"
-              : product.inventory === 0
-              ? "bg-gray-700 text-gray-500 cursor-not-allowed"
-              : "bg-purple-600 hover:bg-purple-700 text-white hover-lift pulse-glow"
-          }`}
-        >
-          {added ? (
-            <><Check className="w-5 h-5" /> Added to Cart!</>
-          ) : (
-            <><ShoppingCart className="w-5 h-5" /> Add to Cart</>
-          )}
-        </button>
+        <div className="space-y-3">
+          <button
+            onClick={handleAddToCart}
+            disabled={product.inventory === 0 || added}
+            className={`w-full flex items-center justify-center gap-2 font-semibold py-4 rounded-xl transition-all duration-200 ${
+              added
+                ? "bg-green-600 text-white"
+                : product.inventory === 0
+                ? "bg-gray-700 text-gray-500 cursor-not-allowed"
+                : "bg-white/5 border border-white/10 hover:bg-white/10 text-white"
+            }`}
+          >
+            {added ? (
+              <><Check className="w-5 h-5" /> Added to Cart!</>
+            ) : (
+              <><ShoppingCart className="w-5 h-5" /> Add to Cart</>
+            )}
+          </button>
+
+          <button
+            onClick={handleBuyNow}
+            disabled={product.inventory === 0 || buying}
+            className="w-full flex items-center justify-center gap-2 font-bold py-4 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white shadow-lg shadow-purple-500/20 hover-lift pulse-glow disabled:opacity-50"
+          >
+            {buying ? (
+              <><Loader2 className="w-5 h-5 animate-spin" /> Processing...</>
+            ) : (
+              <><Zap className="w-5 h-5 fill-white" /> Buy Now</>
+            )}
+          </button>
+        </div>
 
         {/* Trust badges */}
         <div className="grid grid-cols-3 gap-3 pt-4 border-t border-white/5">

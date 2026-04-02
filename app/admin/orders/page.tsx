@@ -1,18 +1,70 @@
 import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/utils";
 import { ShoppingBag, Package } from "lucide-react";
+import { OrderActions } from "./OrderActions";
+
+import { auth } from "@/auth";
+import { getMockOrders } from "@/lib/demo-state";
 
 async function getOrders() {
+  const session = await auth();
+  const adminId = session?.user?.id || "default_admin";
+  const demoOrders = await getMockOrders(adminId);
+
   try {
-    return await prisma.order.findMany({
+    const dbOrders = await prisma.order.findMany({
       include: { items: { include: { product: { select: { name: true } } } } },
       orderBy: { createdAt: "desc" },
       take: 50,
     });
+    
+    // Merge real orders with demo orders from cookies
+    const merged = [...dbOrders, ...demoOrders].sort((a: any, b: any) => 
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+
+    return merged.length > 0 ? merged : generateMockOrders();
   } catch {
-    return [];
+    console.warn("DB Offline: Using order simulation mode.");
+    return demoOrders.length > 0 ? demoOrders : generateMockOrders();
   }
 }
+
+const generateMockOrders = () => {
+  const now = Date.now();
+  return [
+    {
+      id: "mock_1a2b3c4d",
+      customerName: "Jane Doe",
+      customerEmail: "jane.demo@example.com",
+      items: [{ product: { name: "Premium Wireless Earbuds Pro" } }],
+      status: "PAID",
+      total: 2999,
+      utmSource: "facebook",
+      createdAt: new Date(now - 1000 * 60 * 5).toISOString() // 5 mins ago
+    },
+    {
+      id: "mock_2b3c4d5e",
+      customerName: "Arjun Mehta",
+      customerEmail: "arjun.demo@example.com",
+      items: [{ product: { name: "Minimalist Leather Wallet" } }],
+      status: "PROCESSING",
+      total: 799,
+      utmSource: "instagram",
+      createdAt: new Date(now - 1000 * 60 * 60 * 2).toISOString() // 2 hours ago
+    },
+    {
+      id: "mock_3c4d5e6f",
+      customerName: "Sam Smith",
+      customerEmail: "sam.demo@example.com",
+      items: [{ product: { name: "Smart Fitness Tracker Band" } }],
+      status: "SHIPPED",
+      total: 1799,
+      utmSource: "direct",
+      createdAt: new Date(now - 1000 * 60 * 60 * 48).toISOString() // 2 days ago
+    }
+  ];
+};
 
 const statusColors: Record<string, string> = {
   PENDING: "bg-yellow-500/20 text-yellow-400",
@@ -41,23 +93,29 @@ export default async function AdminOrdersPage() {
         </div>
       ) : (
         <div className="glass rounded-2xl overflow-hidden">
-          <table className="w-full">
+          <table className="w-full text-left border-collapse">
             <thead>
               <tr className="border-b border-white/5">
-                <th className="text-left px-6 py-4 text-xs text-gray-500 uppercase tracking-wider">Order</th>
-                <th className="text-left px-6 py-4 text-xs text-gray-500 uppercase tracking-wider">Customer</th>
-                <th className="text-left px-6 py-4 text-xs text-gray-500 uppercase tracking-wider">Items</th>
-                <th className="text-left px-6 py-4 text-xs text-gray-500 uppercase tracking-wider">Status</th>
-                <th className="text-left px-6 py-4 text-xs text-gray-500 uppercase tracking-wider">Total</th>
-                <th className="text-left px-6 py-4 text-xs text-gray-500 uppercase tracking-wider">Source</th>
-                <th className="text-left px-6 py-4 text-xs text-gray-500 uppercase tracking-wider">Date</th>
+                <th className="px-6 py-4 text-xs text-gray-500 uppercase tracking-wider">Order</th>
+                <th className="px-6 py-4 text-xs text-gray-500 uppercase tracking-wider">Customer</th>
+                <th className="px-6 py-4 text-xs text-gray-500 uppercase tracking-wider">Items</th>
+                <th className="px-6 py-4 text-xs text-gray-500 uppercase tracking-wider">Status</th>
+                <th className="px-6 py-4 text-xs text-gray-500 uppercase tracking-wider">Total</th>
+                <th className="px-6 py-4 text-xs text-gray-500 uppercase tracking-wider">Source</th>
+                <th className="px-6 py-4 text-xs text-gray-500 uppercase tracking-wider text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">
-              {orders.map((order) => (
+              {orders.map((order: any) => (
                 <tr key={order.id} className="hover:bg-white/2 transition-colors">
                   <td className="px-6 py-4">
                     <span className="text-xs font-mono text-purple-400">{order.id.slice(-8).toUpperCase()}</span>
+                    {order.id.startsWith("mock_") && (
+                      <span className="ml-2 px-1.5 py-0.5 bg-purple-500/20 text-purple-400 font-bold text-[9px] rounded uppercase">Demo</span>
+                    )}
+                    <p className="text-[10px] text-gray-600 mt-0.5 whitespace-nowrap">
+                      {new Date(order.createdAt).toLocaleDateString("en-IN")} {new Date(order.createdAt).toLocaleTimeString("en-IN", { hour: '2-digit', minute: '2-digit' })}
+                    </p>
                   </td>
                   <td className="px-6 py-4">
                     <p className="text-sm font-medium">{order.customerName}</p>
@@ -80,10 +138,8 @@ export default async function AdminOrdersPage() {
                   <td className="px-6 py-4">
                     <span className="text-xs text-gray-500">{order.utmSource || "Direct"}</span>
                   </td>
-                  <td className="px-6 py-4">
-                    <span className="text-xs text-gray-500">
-                      {new Date(order.createdAt).toLocaleDateString("en-IN")}
-                    </span>
+                  <td className="px-6 py-4 text-right">
+                    <OrderActions orderId={order.id} currentStatus={order.status} />
                   </td>
                 </tr>
               ))}

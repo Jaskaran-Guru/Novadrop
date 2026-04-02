@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { LayoutDashboard, Package, ShoppingBag, BarChart2, Megaphone, Zap } from "lucide-react";
+import { LayoutDashboard, Package, ShoppingBag, BarChart2, Megaphone, Zap, Users } from "lucide-react";
+import { SimulationIndicator } from "@/components/admin/SimulationIndicator";
 
 export default async function AdminLayout({
   children,
@@ -18,11 +19,12 @@ export default async function AdminLayout({
     { href: "/admin/products", label: "Products", icon: Package },
     { href: "/admin/orders", label: "Orders", icon: ShoppingBag },
     { href: "/admin/analytics", label: "Analytics", icon: BarChart2 },
+    { href: "/admin/users", label: "Users", icon: Users },
     { href: "/admin/campaigns", label: "Campaigns", icon: Megaphone },
   ];
 
   return (
-    <div className="flex min-h-screen pt-16">
+    <div className="flex min-h-screen pt-16 relative">
       {/* Sidebar */}
       <aside className="w-64 glass border-r border-white/5 fixed top-16 left-0 bottom-0 overflow-y-auto">
         <div className="p-6">
@@ -47,6 +49,9 @@ export default async function AdminLayout({
 
       {/* Content */}
       <main className="flex-1 ml-64 p-8">{children}</main>
+
+      {/* Admin Only Status Light */}
+      <SimulationIndicator />
     </div>
   );
 }

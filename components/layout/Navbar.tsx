@@ -3,14 +3,19 @@
 import Link from "next/link";
 import { useCart } from "@/lib/store/cart";
 import { ShoppingCart, Zap, Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
 
 export function Navbar() {
   const { getTotalItems } = useCart();
   const { data: session } = useSession();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const totalItems = getTotalItems();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5">
@@ -64,7 +69,7 @@ export function Navbar() {
 
             <Link href="/cart" className="relative p-2 hover:bg-white/10 rounded-lg transition-colors">
               <ShoppingCart className="w-5 h-5 text-gray-300" />
-              {totalItems > 0 && (
+              {mounted && totalItems > 0 && (
                 <span className="absolute -top-1 -right-1 w-5 h-5 bg-purple-600 text-white text-xs rounded-full flex items-center justify-center font-bold">
                   {totalItems}
                 </span>
@@ -89,6 +94,9 @@ export function Navbar() {
           {session?.user ? (
             <>
               <Link href="/account" className="text-sm text-gray-300 hover:text-white" onClick={() => setMobileOpen(false)}>Orders</Link>
+              {(session?.user as { role?: string })?.role === "ADMIN" && (
+                <Link href="/admin" className="text-sm text-purple-400 hover:text-purple-300 font-bold" onClick={() => setMobileOpen(false)}>Admin Panel</Link>
+              )}
               <button onClick={() => { signOut(); setMobileOpen(false); }} className="text-sm text-gray-300 hover:text-white text-left">Sign Out</button>
             </>
           ) : (
