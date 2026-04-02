@@ -15,6 +15,7 @@ export async function updateOrderStatus(orderId: string, status: string) {
       data: { status: status as any },
     });
     revalidatePath("/admin/orders");
+    revalidatePath("/account");
     return { success: true };
   } catch (error: any) {
     const isRecordNotFound = error?.code === "P2025";
@@ -23,6 +24,7 @@ export async function updateOrderStatus(orderId: string, status: string) {
     if (isRecordNotFound || isDbOffline) {
       await updateMockOrder(session.user.id, orderId, status);
       revalidatePath("/admin/orders");
+      revalidatePath("/account");
       return { success: true, mocked: true };
     }
     return { success: false, error: "Failed to update status." };
@@ -48,6 +50,7 @@ export async function deleteOrder(orderId: string) {
       where: { id: orderId },
     });
     revalidatePath("/admin/orders");
+    revalidatePath("/account");
     return { success: true };
   } catch (error: any) {
     const isRecordNotFound = error?.code === "P2025";
@@ -56,6 +59,7 @@ export async function deleteOrder(orderId: string) {
     if (isRecordNotFound || isDbOffline) {
       await removeMockOrder(session.user.id, orderId);
       revalidatePath("/admin/orders");
+      revalidatePath("/account");
       return { success: true, mocked: true };
     }
     return { success: false, error: "Failed to delete order." };
