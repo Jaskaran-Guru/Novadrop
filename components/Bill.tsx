@@ -80,7 +80,13 @@ export const Bill: React.FC<BillProps> = ({ order }) => {
           </div>
           <div className="space-y-1">
             <p className="text-[10px] uppercase font-black text-slate-400 tracking-widest">Payment Status</p>
-            <span className="inline-block bg-green-100 text-green-700 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">Paid</span>
+            <span className={`inline-block px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${
+              order.status === 'PAID' ? 'bg-green-100 text-green-700' :
+              order.status === 'PENDING' ? 'bg-yellow-100 text-yellow-700' :
+              'bg-slate-100 text-slate-700'
+            }`}>
+              {order.status || 'PAID'}
+            </span>
           </div>
         </div>
       </div>

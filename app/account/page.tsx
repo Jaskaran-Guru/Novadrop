@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { formatPrice } from "@/lib/utils";
 import { Package, XCircle, ShoppingBag } from "lucide-react";
 import { RefundButton } from "@/app/account/RefundButton";
+import DownloadBillButton from "@/components/DownloadBillButton";
 
 import { getMockOrders } from "@/lib/demo-state";
 
@@ -93,9 +94,13 @@ export default async function AccountPage() {
                       </span>
                     </div>
                     
-                    {order.status === 'PENDING' && (
-                      <RefundButton orderId={order.id} />
-                    )}
+                    <div className="flex items-center gap-2">
+                      <DownloadBillButton order={order} />
+                      
+                      {order.status === 'PENDING' && (
+                        <RefundButton orderId={order.id} />
+                      )}
+                    </div>
                   </div>
                 </div>
 
