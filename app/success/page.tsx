@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getMockOrders } from "@/lib/demo-state";
 import { formatPrice } from "@/lib/utils";
 import { auth } from "@/auth";
+import DownloadBillButton from "@/components/DownloadBillButton";
 
 export default async function SuccessPage() {
   const session = await auth();
@@ -14,6 +15,7 @@ export default async function SuccessPage() {
     <div className="min-h-screen pt-24 pb-16 flex items-center justify-center">
       <div className="max-w-md mx-auto px-4 text-center">
         <div className="glass rounded-3xl p-8 md:p-12 glow">
+          {/* ... (keep existing icons and titles) */}
           <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle className="w-10 h-10 text-green-400" />
           </div>
@@ -51,6 +53,9 @@ export default async function SuccessPage() {
             >
               View Your Orders <ShoppingBag className="w-4 h-4" />
             </Link>
+            
+            {lastOrder && <DownloadBillButton order={lastOrder} />}
+
             <Link href="/products" className="glass text-gray-400 hover:text-white py-3 rounded-xl transition-all text-sm flex items-center justify-center gap-2">
               Continue Shopping <ArrowRight className="w-4 h-4" />
             </Link>
