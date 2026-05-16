@@ -4,9 +4,9 @@ const bcrypt = require("bcryptjs");
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log("🌱 Database Seeding started...");
+  console.log(" Database Seeding started...");
 
-  // 1. Create Admin User
+  
   const adminPassword = await bcrypt.hash("password123", 12);
   const admin = await prisma.user.upsert({
     where: { email: "admin@novadrop.com" },
@@ -22,9 +22,9 @@ async function main() {
       status: "ACTIVE",
     },
   });
-  console.log("✅ Admin user created:", admin.email);
+  console.log(" Admin user created:", admin.email);
 
-  // 2. Create Products
+  
   const products = [
     {
       name: "Premium Wireless Earbuds Pro",
@@ -87,9 +87,9 @@ async function main() {
       create: product,
     });
   }
-  console.log("✅ Products seeded.");
+  console.log(" Products seeded.");
 
-  // 3. Create Ad Campaigns
+  
   const campaigns = [
     {
       name: "FB - Summer Collection Launch",
@@ -127,8 +127,8 @@ async function main() {
     await prisma.adCampaign.create({ data: campaign });
   }
 
-  console.log("✅ Ad campaigns seeded.");
-  console.log("✨ Seeding completed.");
+  console.log(" Ad campaigns seeded.");
+  console.log(" Seeding completed.");
 }
 
 main()

@@ -24,7 +24,7 @@ export async function createCampaign(data: {
       },
     });
 
-    // Log tracking event
+    
     await prisma.analyticsEvent.create({
       data: {
         eventType: "admin_action",
@@ -68,7 +68,7 @@ export async function updateCampaign(id: string, data: Partial<{
       data: updateData,
     });
 
-    // Log tracking event
+    
     await prisma.analyticsEvent.create({
       data: {
         eventType: "admin_action",
@@ -95,7 +95,7 @@ export async function deleteCampaign(id: string) {
       where: { id },
     });
 
-    // Log tracking event
+    
     await prisma.analyticsEvent.create({
       data: {
         eventType: "admin_action",

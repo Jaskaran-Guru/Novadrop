@@ -32,7 +32,7 @@ export function LiveActivityFeed() {
 
   useEffect(() => {
     fetchActivity();
-    const interval = setInterval(fetchActivity, 10000); // Poll every 10s
+    const interval = setInterval(fetchActivity, 10000); 
     return () => clearInterval(interval);
   }, []);
 

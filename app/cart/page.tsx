@@ -75,7 +75,7 @@ export default function CartPage() {
         <h1 className="text-3xl font-black mb-8">Shopping Cart</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Items */}
+          
           <div className="lg:col-span-2 space-y-4">
             {items.map((item) => (
               <div key={item.id} className="glass rounded-2xl p-4 flex items-center gap-4">
@@ -119,7 +119,7 @@ export default function CartPage() {
             ))}
           </div>
 
-          {/* Summary */}
+          
           <div className="glass rounded-2xl p-6 h-fit">
             <h2 className="text-xl font-bold mb-6">Order Summary</h2>
             <div className="space-y-3 mb-6">

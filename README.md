@@ -1,149 +1,112 @@
-# D2C E-commerce Growth Optimization Platform (v2)
+# Novadrop 
 
-## 1. 🧭 Product Overview
-### 1.1 Vision
-Rebuild and enhance a data-driven D2C e-commerce platform that enables rapid product validation, scalable growth, and full-funnel optimization using modern web technologies and marketing integrations.
+## Project Overview
 
-### 1.2 Goals
-- Recreate lost system with better architecture
-- Enable rapid experimentation (ads + landing pages)
-- Provide real-time analytics dashboard
-- Improve conversion rates and ROAS
-- Build a scalable, modular system
+This repository contains a data-driven Direct-to-Consumer (D2C) e-commerce platform designed for rapid product validation, scalable growth, and full-funnel optimization. The system is built with modern web technologies and integrates seamlessly with external marketing and payment services.
 
-## 2. 👥 Stakeholders
-- **Founder / Product Owner** (You)
-- **Developers** (Frontend + Backend)
-- **Marketing/Growth Team**
-- **Customers** (end users)
+## Architecture and Tech Stack
 
-## 3. 🧩 System Scope
-**Core Modules:**
-- Storefront (Landing pages)
-- Product Management
-- Checkout System
-- Analytics Dashboard
-- Experimentation Engine (A/B Testing)
-- Ad Tracking Integration
-- Admin Panel
+### Frontend
+- Framework: Next.js (App Router)
+- UI Library: React
+- Styling: Tailwind CSS
+- Animation: Framer Motion
 
-## 4. ⚙️ Tech Stack (Cutting Edge)
-**Frontend:**
-- React + Next.js (App Router)
-- Tailwind CSS / ShadCN UI
-- Framer Motion (animations)
+### Backend
+- Framework: Next.js API Routes
+- ORM: Prisma
+- Database: PostgreSQL
+- Caching and Sessions: Redis
 
-**Backend:**
-- Node.js (NestJS or Express)
-- GraphQL / REST APIs
+### Third-Party Integrations
+- Payments: Stripe
+- Analytics: Google Analytics 4, Server-side event tracking
+- Marketing: Meta Pixel
 
-**Database:**
-- PostgreSQL (primary)
-- Redis (caching + sessions)
+## Prerequisites
 
-**Analytics & Tracking:**
-- Meta Pixel (FB/IG Ads)
-- Google Analytics 4
-- Server-side tracking (via APIs)
+Ensure you have the following installed on your local development environment:
+- Node.js (version 18.x or later)
+- PostgreSQL
+- Redis
+- npm or yarn
 
-**DevOps:**
-- Vercel (frontend)
-- AWS / Railway / Render (backend)
-- Docker (optional)
+## Installation
 
-**Payments:**
-- Stripe / Razorpay
+1. Clone the repository to your local machine.
+2. Navigate to the project directory.
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-## 5. 🧑‍💻 User Personas
-### 1. Customer
-- Browses product
-- Views landing pages
-- Makes purchase
+## Configuration
 
-### 2. Admin (You)
-- Manages products
-- Tracks performance
-- Runs experiments
+Create a `.env` file in the root of your project and populate it with the required environment variables:
 
-## 6. 📋 Functional Requirements (Agile User Stories)
+```env
+DATABASE_URL="postgresql://username:password@localhost:5432/ecommerce?schema=public"
+REDIS_URL="redis://localhost:6379"
+STRIPE_SECRET_KEY="sk_test_..."
+STRIPE_WEBHOOK_SECRET="whsec_..."
+NEXT_PUBLIC_META_PIXEL_ID="your_pixel_id"
+NEXTAUTH_SECRET="your_nextauth_secret"
+NEXTAUTH_URL="http://localhost:3000"
+```
 
-### 🟢 EPIC 1: Storefront & Landing Pages
-- **User Story 1.1:** As a customer, I want to view a fast-loading landing page so that I can quickly understand the product.
-  - *Acceptance Criteria:* Page load < 2 sec, Mobile responsive, CTA clearly visible.
-- **User Story 1.2:** As an admin, I want to create multiple landing pages for A/B testing.
-  - *Acceptance Criteria:* Duplicate page feature, Editable content blocks, Unique URLs per variant.
+## Running the Application
 
-### 🟢 EPIC 2: Product Management
-- **User Story 2.1:** As an admin, I want to add/edit products.
-  - *Features:* Title, price, images, Variants (size, color), Inventory tracking.
+### Development Mode
 
-### 🟢 EPIC 3: Checkout System
-- **User Story 3.1:** As a customer, I want a seamless checkout.
-  - *Acceptance Criteria:* Guest checkout, Payment gateway integration, Order confirmation page.
+To start the development server, run:
 
-### 🟢 EPIC 4: Analytics Dashboard
-- **User Story 4.1:** As an admin, I want to track funnel metrics.
-  - *Metrics:* CTR, CPC, Conversion Rate, ROAS, Revenue.
+```bash
+npm run dev
+```
+The application will be accessible at `http://localhost:3000`.
 
-### 🟢 EPIC 5: Experimentation Engine
-- **User Story 5.1:** As an admin, I want to run A/B tests.
-  - *Features:* Split traffic automatically, Compare performance, Declare winner.
+### Database Migrations
 
-### 🟢 EPIC 6: Ad Integration
-- **User Story 6.1:** As a system, I want to track user behavior from ads.
-  - *Features:* Meta Pixel integration, UTM tracking, Server-side event tracking.
+To apply database schema changes, run:
 
-### 🟢 EPIC 7: Admin Dashboard
-- **User Story 7.1:** As an admin, I want a centralized control panel.
-  - *Features:* View sales, Manage products, View experiments, Analytics overview.
+```bash
+npx prisma db push
+```
 
-## 7. 🔄 Agile Development Plan
-**Sprint Duration:** 2 Weeks
+To seed the database with initial data:
 
-- **🏁 Sprint 1: Foundation**
-  - Project setup, Auth system, Database schema, Basic UI layout.
-- **🏁 Sprint 2: Storefront**
-  - Landing page UI, Product display, Mobile optimization.
-- **🏁 Sprint 3: Checkout**
-  - Cart system, Payment integration, Order storage.
-- **🏁 Sprint 4: Analytics**
-  - Event tracking, Dashboard UI, Metrics calculation.
-- **🏁 Sprint 5: A/B Testing**
-  - Variant system, Traffic split logic, Reporting.
-- **🏁 Sprint 6: Optimization**
-  - Performance improvements, SEO, Security.
+```bash
+npx prisma db seed
+```
 
-## 8. 🧱 Non-Functional Requirements
-- **Performance:** Page load < 2 sec, Handle 1K+ concurrent users.
-- **Security:** HTTPS enforced, JWT authentication, Payment security compliance.
-- **Scalability:** Modular architecture, API-first design.
+### Production Build
 
-## 9. 🗃️ Database Design (High-Level)
-**Tables:**
-- Users
-- Products
-- Orders
-- Experiments
-- Events (tracking)
-- Landing Pages
+To build the application for production:
 
-## 10. 📊 KPIs & Success Metrics
-- Conversion Rate ↑
-- ROAS ↑
-- CAC ↓
-- Time to validate product ↓
-- Revenue growth
+```bash
+npm run build
+```
 
-## 11. 🚀 Future Enhancements
-- AI-based ad creative suggestions
-- Personalized landing pages
-- Email/SMS automation
-- Recommendation engine
-- Multi-product scaling
+To start the production server:
 
-## 12. 🧠 Key Improvement Over Old Version
-- Structured experimentation (not random testing)
-- Real-time analytics (not delayed insights)
-- Scalable architecture
-- Better tracking accuracy (server-side events)
-- Modular system (easy to expand)
+```bash
+npm start
+```
+
+## Project Structure
+
+- `/app`: Contains all Next.js App Router pages and API endpoints.
+- `/components`: Reusable React components.
+- `/lib`: Utility functions, database configuration, and external service clients.
+- `/prisma`: Database schema definitions and seed scripts.
+- `/public`: Static assets.
+
+## Core Modules
+
+1. Storefront: Optimized landing pages for rapid load times and high conversion rates.
+2. Product Management: Admin controls for inventory, variants, and pricing.
+3. Checkout System: Seamless payment processing via Stripe.
+4. Analytics Dashboard: Centralized view of key metrics including Conversion Rate and Return on Ad Spend (ROAS).
+5. Experimentation Engine: Built-in A/B testing for traffic splitting and performance comparison.
+
+.

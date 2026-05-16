@@ -25,7 +25,7 @@ export default async function AdminLayout({
 
   return (
     <div className="flex min-h-screen pt-16 relative">
-      {/* Sidebar */}
+      
       <aside className="w-64 glass border-r border-white/5 fixed top-16 left-0 bottom-0 overflow-y-auto">
         <div className="p-6">
           <div className="flex items-center gap-2 mb-8">
@@ -47,10 +47,10 @@ export default async function AdminLayout({
         </div>
       </aside>
 
-      {/* Content */}
+      
       <main className="flex-1 ml-64 p-8">{children}</main>
 
-      {/* Admin Only Status Light */}
+      
       <SimulationIndicator />
     </div>
   );

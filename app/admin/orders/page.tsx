@@ -18,7 +18,7 @@ async function getOrders() {
       take: 50,
     });
     
-    // Merge real orders with demo orders from cookies
+    
     const merged = [...dbOrders, ...demoOrders].sort((a: any, b: any) => 
       new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
@@ -41,7 +41,7 @@ const generateMockOrders = () => {
       status: "PAID",
       total: 2999,
       utmSource: "facebook",
-      createdAt: new Date(now - 1000 * 60 * 5).toISOString() // 5 mins ago
+      createdAt: new Date(now - 1000 * 60 * 5).toISOString() 
     },
     {
       id: "mock_2b3c4d5e",
@@ -51,7 +51,7 @@ const generateMockOrders = () => {
       status: "PROCESSING",
       total: 799,
       utmSource: "instagram",
-      createdAt: new Date(now - 1000 * 60 * 60 * 2).toISOString() // 2 hours ago
+      createdAt: new Date(now - 1000 * 60 * 60 * 2).toISOString() 
     },
     {
       id: "mock_3c4d5e6f",
@@ -61,7 +61,7 @@ const generateMockOrders = () => {
       status: "SHIPPED",
       total: 1799,
       utmSource: "direct",
-      createdAt: new Date(now - 1000 * 60 * 60 * 48).toISOString() // 2 days ago
+      createdAt: new Date(now - 1000 * 60 * 60 * 48).toISOString() 
     }
   ];
 };

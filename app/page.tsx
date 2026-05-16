@@ -53,21 +53,21 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
+      
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-        {/* Background gradient */}
+        
         <div className="absolute inset-0 bg-gradient-to-br from-purple-950/40 via-[#0a0a0a] to-pink-950/20" />
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-pink-600/10 rounded-full blur-3xl" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
-          {/* Badge */}
+          
           <div className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full text-sm text-purple-300 mb-8 fade-in">
             <TrendingUp className="w-4 h-4" />
             
           </div>
 
-          {/* Headline */}
+          
           <h1 className="text-5xl md:text-7xl font-black leading-tight mb-6 fade-in">
             Products Built for
             <br />
@@ -79,7 +79,7 @@ export default async function HomePage() {
             No middlemen. No fluff. Just quality that converts.
           </p>
 
-          {/* CTA Buttons */}
+          
           <div className="flex flex-col sm:flex-row gap-4 justify-center fade-in">
             <Link
               href="/products"
@@ -95,7 +95,7 @@ export default async function HomePage() {
             </Link>
           </div>
 
-          {/* Stats */}
+          
           <div className="mt-16 grid grid-cols-3 gap-8 max-w-lg mx-auto fade-in">
             <div className="text-center">
               <div className="text-3xl font-black gradient-text">{stats.orders.toLocaleString()}+</div>
@@ -113,7 +113,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Features */}
+      
       <section className="py-24 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -135,7 +135,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Featured Products */}
+      
       {featuredProducts.length > 0 && (
         <section className="py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -190,7 +190,7 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Social Proof */}
+      
       <section className="py-24 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -223,7 +223,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Final CTA */}
+      
       <section className="py-24">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <div className="glass rounded-3xl p-12 glow">
@@ -242,7 +242,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Footer */}
+      
       <footer className="border-t border-white/5 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
@@ -250,7 +250,7 @@ export default async function HomePage() {
               <Zap className="w-5 h-5 text-purple-400" />
               <span className="font-bold gradient-text">NovaDrop</span>
             </div>
-            <p className="text-xs text-gray-600">© 2024 NovaDrop. All rights reserved.</p>
+            <p className="text-xs text-gray-600"> 2024 NovaDrop. All rights reserved.</p>
             <div className="flex gap-6">
               <Link href="/privacy" className="text-xs text-gray-600 hover:text-gray-400">Privacy</Link>
               <Link href="/terms" className="text-xs text-gray-600 hover:text-gray-400">Terms</Link>

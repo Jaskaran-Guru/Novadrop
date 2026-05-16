@@ -61,7 +61,7 @@ function LoginContent() {
 
   return (
     <div className="w-full max-w-md">
-      {/* Logo */}
+      
       <div className="text-center mb-8">
         <Link href="/" className="inline-flex items-center gap-2">
           <div className="w-10 h-10 gradient-border rounded-xl flex items-center justify-center">
@@ -72,7 +72,7 @@ function LoginContent() {
       </div>
 
       <div className="glass rounded-3xl p-8">
-        {/* Tabs */}
+        
         <div className="flex glass rounded-xl p-1 mb-8">
           <button
             onClick={() => setIsLogin(true)}

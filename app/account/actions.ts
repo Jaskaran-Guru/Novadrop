@@ -19,7 +19,7 @@ export async function cancelAndRefundOrder(orderId: string) {
     });
 
     if (!order) {
-      // If not in DB, check if it's a mock order
+      
       await removeMockOrder(session.user.id, orderId);
       revalidatePath("/account");
       return { success: true, mocked: true };
@@ -33,7 +33,7 @@ export async function cancelAndRefundOrder(orderId: string) {
       return { success: false, error: "Only pending orders can be cancelled and refunded." };
     }
 
-    // Process the "Refund" in the real database
+    
     await prisma.order.delete({
       where: { id: orderId },
     });
@@ -44,7 +44,7 @@ export async function cancelAndRefundOrder(orderId: string) {
     return { success: true };
   } catch (error: any) {
     if (error?.name === "PrismaClientInitializationError") {
-      // Mocking successful refund for offline demos as requested.
+      
       await removeMockOrder(session.user.id, orderId);
       revalidatePath("/account");
       return { success: true, mocked: true };

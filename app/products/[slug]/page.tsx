@@ -11,11 +11,11 @@ async function getProduct(slug: string) {
       where: { slug, active: true },
       include: { variants: true },
     });
-    // If database returned something, return it. Else check the fallback cache.
+    
     if (product) return product;
     return FALLBACK_PRODUCTS.find((p) => p.slug === slug) || null;
   } catch {
-    // Database offline handler
+    
     return FALLBACK_PRODUCTS.find((p) => p.slug === slug) || null;
   }
 }

@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
   } catch (error: any) {
     console.error("Stripe checkout error:", error);
     
-    // DEMO FALLBACK: If Stripe fails (unconfigured/offline), simulate a successful redirect.
+    
     if (!process.env.STRIPE_SECRET_KEY || error.raw?.type === "invalid_request_error" || error.message?.includes("API key")) {
       console.warn("DEMO MODE: Stripe unconfigured. Redirecting to mock success.");
       
@@ -91,7 +91,7 @@ export async function POST(req: NextRequest) {
         });
       } catch (dbError) {
         console.warn("Neon DB offline or error writing. Falling back to Demo State Cookies.", dbError);
-        // Save order to demo state
+        
         await addMockOrder(userId, {
           id: mockOrderId,
           customerEmail: customerEmail || "guest@example.com",
@@ -107,7 +107,7 @@ export async function POST(req: NextRequest) {
         });
       }
 
-      // Log tracking event
+      
       await prisma.analyticsEvent.create({
         data: {
           eventType: "checkout_start",
@@ -133,7 +133,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ error: "Payment initialization failed" }, { status: 500 });
   } finally {
-    // Log as long as we have valid items
+    
     if (items && items.length > 0) {
       await prisma.analyticsEvent.create({
         data: {

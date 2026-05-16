@@ -15,16 +15,16 @@ export default async function SuccessPage() {
     <div className="min-h-screen pt-24 pb-16 flex items-center justify-center">
       <div className="max-w-md mx-auto px-4 text-center">
         <div className="glass rounded-3xl p-8 md:p-12 glow">
-          {/* ... (keep existing icons and titles) */}
+          
           <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle className="w-10 h-10 text-green-400" />
           </div>
-          <h1 className="text-3xl font-black mb-3">Order Confirmed! 🎉</h1>
+          <h1 className="text-3xl font-black mb-3">Order Confirmed! </h1>
           <p className="text-gray-400 mb-6 transition-all">
             Thank you for your purchase! Your order is being processed and will be shipped soon.
           </p>
 
-          {/* Just Purchased Summary */}
+          
           {lastOrder && (
             <div className="text-left mb-8 space-y-3">
               <p className="text-xs font-bold text-gray-500 uppercase tracking-widest px-1">Just Purchased</p>

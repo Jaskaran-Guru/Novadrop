@@ -8,13 +8,13 @@ export function SimulationIndicator() {
   const [lastCheck, setLastCheck] = useState<Date | null>(null);
 
   useEffect(() => {
-    // We check if any of the recent API calls reported a 'mocked' flag
-    // In a real app, this could be via a global state or a dedicated meta-endpoint
+    
+    
     const checkStatus = async () => {
       try {
         const res = await fetch("/api/admin/stats");
         const data = await res.json();
-        // The API returns 'mocked: true' if it's using FALLBACK_STATS
+        
         setIsSimulation(!!data.mocked);
         setLastCheck(new Date());
       } catch {
@@ -24,7 +24,7 @@ export function SimulationIndicator() {
     };
 
     checkStatus();
-    const interval = setInterval(checkStatus, 30000); // Check every 30s
+    const interval = setInterval(checkStatus, 30000); 
     return () => clearInterval(interval);
   }, []);
 

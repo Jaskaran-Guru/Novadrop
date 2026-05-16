@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 export default function AnalyticsPage() {
   const [data, setData] = useState(FALLBACK_STATS.funnel);
   
-  // Client-side hydration safety
+  
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 

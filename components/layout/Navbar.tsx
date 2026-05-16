@@ -21,7 +21,7 @@ export function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+          
           <Link href="/" className="flex items-center gap-2 group">
             <div className="w-8 h-8 rounded-lg gradient-border flex items-center justify-center">
               <Zap className="w-4 h-4 text-white" />
@@ -29,7 +29,7 @@ export function Navbar() {
             <span className="font-bold text-xl gradient-text">NovaDrop</span>
           </Link>
 
-          {/* Desktop Nav */}
+          
           <div className="hidden md:flex items-center gap-8">
             <Link href="/products" className="text-sm text-gray-400 hover:text-white transition-colors">
               Shop
@@ -49,7 +49,7 @@ export function Navbar() {
             )}
           </div>
 
-          {/* Actions */}
+          
           <div className="flex items-center gap-4">
             {session?.user ? (
               <button
@@ -89,7 +89,7 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      
       {mobileOpen && (
         <div className="md:hidden glass border-t border-white/5 px-4 py-4 flex flex-col gap-4">
           <Link href="/products" className="text-sm text-gray-300 hover:text-white" onClick={() => setMobileOpen(false)}>Shop</Link>

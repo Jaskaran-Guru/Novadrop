@@ -12,7 +12,7 @@ export function UserActions({ userId, currentStatus, userRole }: { userId: strin
   const { toast } = useToast();
   const router = useRouter();
 
-  // Keep local role in sync with server prop
+  
   useEffect(() => {
     setLocalRole(userRole);
   }, [userRole]);
@@ -41,7 +41,7 @@ export function UserActions({ userId, currentStatus, userRole }: { userId: strin
   };
 
   const handleRoleChange = (newRole: string) => {
-    setLocalRole(newRole); // Immediate local update
+    setLocalRole(newRole); 
     startTransition(async () => {
       try {
         const res = await updateUserRole(userId, newRole);
@@ -52,7 +52,7 @@ export function UserActions({ userId, currentStatus, userRole }: { userId: strin
           });
           router.refresh();
         } else {
-          setLocalRole(userRole); // Revert on failure
+          setLocalRole(userRole); 
           toast({ 
             title: "Update Failed", 
             description: res.error || "Could not change user role.",

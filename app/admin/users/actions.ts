@@ -18,7 +18,7 @@ export async function toggleUserSuspension(userId: string, currentStatus: string
     revalidatePath("/admin/users");
     return { success: true };
   } catch (error: any) {
-    // If record not found (P2025) or DB offline, fallback to simulation mode
+    
     const isRecordNotFound = error?.code === "P2025";
     const isDbOffline = error?.name === "PrismaClientInitializationError";
 
@@ -32,7 +32,7 @@ export async function toggleUserSuspension(userId: string, currentStatus: string
     console.error("User Action Error (Toggle):", error);
     return { success: false, error: "Failed to toggle suspension." };
   } finally {
-    // Log tracking event regardless of mock or real DB
+    
     await prisma.analyticsEvent.create({
       data: {
         eventType: "admin_action",
@@ -40,7 +40,7 @@ export async function toggleUserSuspension(userId: string, currentStatus: string
         userId: session.user.id,
         metadata: { action: "toggle_user_status", targetUserId: userId },
       },
-    }).catch(() => {}); // Ignore logging errors
+    }).catch(() => {}); 
   }
 }
 

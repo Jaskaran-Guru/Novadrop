@@ -1,5 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+
 
 generator client {
   provider = "prisma-client-js"
@@ -119,7 +119,7 @@ model OrderItem {
 
 model AnalyticsEvent {
   id          String   @id @default(cuid())
-  eventType   String   // page_view, add_to_cart, checkout_start, purchase, ad_click
+  eventType   String   
   sessionId   String
   userId      String?
   productId   String?
@@ -131,7 +131,7 @@ model AnalyticsEvent {
   utmContent  String?
   utmTerm     String?
   abVariant   String?
-  value       Float?   // order value for purchase events
+  value       Float?   
   metadata    Json?
   createdAt   DateTime @default(now())
 }
@@ -139,17 +139,17 @@ model AnalyticsEvent {
 model AdCampaign {
   id          String   @id @default(cuid())
   name        String
-  platform    String   // facebook, instagram, google
-  status      String   // active, paused, ended
+  platform    String   
+  status      String   
   budget      Float
   spend       Float    @default(0)
   impressions Int      @default(0)
   clicks      Int      @default(0)
   conversions Int      @default(0)
   revenue     Float    @default(0)
-  ctr         Float    @default(0)  // click-through rate
-  cpc         Float    @default(0)  // cost per click
-  roas        Float    @default(0)  // return on ad spend
+  ctr         Float    @default(0)  
+  cpc         Float    @default(0)  
+  roas        Float    @default(0)  
   startDate   DateTime
   endDate     DateTime?
   createdAt   DateTime @default(now())
@@ -176,8 +176,8 @@ model Experiment {
   title         String
   description   String?
   status        ExperimentStatus @default(DRAFT)
-  trafficSplit  Int            @default(50) // Percentage directed to variant B
-  winnerId      String?        // ID of the winning LandingPage variant
+  trafficSplit  Int            @default(50) 
+  winnerId      String?        
   startDate     DateTime?
   endDate       DateTime?
   createdAt     DateTime       @default(now())
@@ -191,7 +191,7 @@ model LandingPage {
   experimentId String?
   experiment   Experiment? @relation(fields: [experimentId], references: [id], onDelete: SetNull)
   slug         String      @unique
-  variantType  String      @default("A") // "A" or "B"
+  variantType  String      @default("A") 
   title        String
   contentBlocks Json?
   isActive     Boolean     @default(true)

@@ -41,7 +41,7 @@ function generateMockActivity() {
       eventType: "checkout_start",
       userId: "guest",
       metadata: { mock: true, total: 2999 },
-      createdAt: new Date(now - 1000 * 60 * 2), // 2 mins ago
+      createdAt: new Date(now - 1000 * 60 * 2), 
       page: "/checkout"
     },
     {
@@ -49,7 +49,7 @@ function generateMockActivity() {
       eventType: "admin_action",
       userId: "admin-1",
       metadata: { action: "update_order_status", orderId: "mock_2b3c4d5e", status: "PROCESSING" },
-      createdAt: new Date(now - 1000 * 60 * 15), // 15 mins ago
+      createdAt: new Date(now - 1000 * 60 * 15), 
       page: "/admin/orders"
     },
     {
@@ -57,7 +57,7 @@ function generateMockActivity() {
       eventType: "page_view",
       userId: "guest",
       metadata: { mock: true },
-      createdAt: new Date(now - 1000 * 60 * 30), // 30 mins ago
+      createdAt: new Date(now - 1000 * 60 * 30), 
       page: "/products/premium-wireless-earbuds-pro"
     }
   ];

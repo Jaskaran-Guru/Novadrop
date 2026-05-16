@@ -42,7 +42,7 @@ export const useCart = create<CartStore>()(
           set({ items: [...get().items, item] });
         }
 
-        // Real-time tracking for admin dashboard
+        
         fetch("/api/analytics", {
           method: "POST",
           headers: { "Content-Type": "application/json" },

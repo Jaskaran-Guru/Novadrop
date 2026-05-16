@@ -20,14 +20,14 @@ async function getAccountOrders(userId: string) {
       orderBy: { createdAt: "desc" },
     });
     
-    // Merge real orders with mock orders
+    
     const allOrders = [...mockOrders, ...dbOrders].sort((a: any, b: any) => 
       new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
 
     return allOrders;
   } catch {
-    return mockOrders; // Fallback to just mock orders if DB is offline
+    return mockOrders; 
   }
 }
 

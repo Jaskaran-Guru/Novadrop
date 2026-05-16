@@ -3,7 +3,7 @@ export const FALLBACK_PRODUCTS = [
     id: "p1",
     name: "Premium Wireless Earbuds Pro",
     slug: "premium-wireless-earbuds-pro",
-    description: "Experience crystal-clear audio with our flagship earbuds. Active noise cancellation, 30hr battery life, IPX5 water resistance. Validated by 2000+ customers with 4.9★ rating.",
+    description: "Experience crystal-clear audio with our flagship earbuds. Active noise cancellation, 30hr battery life, IPX5 water resistance. Validated by 2000+ customers with 4.9 rating.",
     price: 2999,
     comparePrice: 4999,
     images: ["https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500"],

@@ -25,7 +25,7 @@ interface BillProps {
 export const Bill: React.FC<BillProps> = ({ order }) => {
   return (
     <div id="printable-bill" className="bg-white text-slate-950 p-12 max-w-2xl mx-auto rounded-3xl shadow-2xl border border-slate-100 print:shadow-none print:border-0 print:p-0">
-      {/* Header */}
+      
       <div className="flex justify-between items-start mb-12">
         <div>
           <div className="flex items-center gap-2 mb-2">
@@ -45,7 +45,7 @@ export const Bill: React.FC<BillProps> = ({ order }) => {
         </div>
       </div>
 
-      {/* Info Grid */}
+      
       <div className="grid grid-cols-2 gap-12 mb-12 border-y border-slate-100 py-8">
         <div className="space-y-4">
           <div className="space-y-1">
@@ -92,7 +92,7 @@ export const Bill: React.FC<BillProps> = ({ order }) => {
         </div>
       </div>
 
-      {/* Items Table */}
+      
       <div className="mb-12">
         <div className="grid grid-cols-4 gap-4 pb-4 border-b border-slate-100">
           <p className="col-span-2 text-[10px] uppercase font-black text-slate-400 tracking-widest">Description</p>
@@ -108,7 +108,7 @@ export const Bill: React.FC<BillProps> = ({ order }) => {
         ))}
       </div>
 
-      {/* Totals */}
+      
       <div className="bg-slate-50 rounded-2xl p-8 space-y-3">
         <div className="flex justify-between items-center text-slate-500">
           <p className="text-xs font-bold uppercase tracking-widest">Subtotal</p>
@@ -124,7 +124,7 @@ export const Bill: React.FC<BillProps> = ({ order }) => {
         </div>
       </div>
 
-      {/* Footer */}
+      
       <div className="mt-12 text-center">
         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] mb-2">Thank you for choosing Novadrop</p>
         <div className="h-1 w-12 bg-purple-200 mx-auto rounded-full"></div>

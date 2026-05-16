@@ -77,7 +77,7 @@ export default function AdminProductsPage() {
         </button>
       </div>
 
-      {/* Create Form */}
+      
       {showForm && (
         <div className="glass rounded-2xl p-6">
           <h2 className="text-lg font-bold mb-6">New Product</h2>
@@ -144,7 +144,7 @@ export default function AdminProductsPage() {
         </div>
       )}
 
-      {/* Products Table */}
+      
       {products.length === 0 ? (
         <div className="glass rounded-2xl p-12 text-center">
           <Package className="w-12 h-12 text-purple-400/30 mx-auto mb-4" />
@@ -176,7 +176,7 @@ export default function AdminProductsPage() {
                       <Package className="w-4 h-4 text-purple-400" />
                       <div>
                         <p className="font-medium text-sm">{p.name}</p>
-                        {p.featured && <span className="text-xs text-amber-400">⭐ Featured</span>}
+                        {p.featured && <span className="text-xs text-amber-400"> Featured</span>}
                       </div>
                     </div>
                   </td>

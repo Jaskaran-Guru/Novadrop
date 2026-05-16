@@ -29,7 +29,7 @@ export async function updateOrderStatus(orderId: string, status: string) {
     }
     return { success: false, error: "Failed to update status." };
   } finally {
-    // Log tracking event for live dashboard
+    
     await prisma.analyticsEvent.create({
       data: {
         eventType: "admin_action",

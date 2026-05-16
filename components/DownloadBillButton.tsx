@@ -43,7 +43,7 @@ export default function DownloadBillButton({ order }: DownloadBillButtonProps) {
         Print Bill
       </button>
 
-      {/* Hidden Bill for Printing */}
+      
       <div id={`bill-${order.id.replace(/\s+/g, '-')}`} className="hidden print:block fixed inset-0 z-[9999] bg-white">
         <Bill order={order} />
       </div>

@@ -1,7 +1,7 @@
 import type { NextAuthConfig } from "next-auth";
 
 export const authConfig = {
-  providers: [], // Leave empty here, we will add heavy providers in the Node.js auth.ts
+  providers: [], 
   pages: {
     signIn: "/login",
     error: "/login",

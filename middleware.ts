@@ -7,7 +7,7 @@ export default NextAuth(authConfig).auth((req) => {
   const isLoggedIn = !!req.auth;
   const isAdmin = (req.auth?.user as { role?: string } | undefined)?.role === "ADMIN";
 
-  // Protect admin routes
+  
   if (pathname.startsWith("/admin")) {
     if (!isLoggedIn) {
       return NextResponse.redirect(new URL("/login?callbackUrl=/admin", req.url));
@@ -17,7 +17,7 @@ export default NextAuth(authConfig).auth((req) => {
     }
   }
 
-  // Protect account routes
+  
   if (pathname.startsWith("/account") && !isLoggedIn) {
     return NextResponse.redirect(new URL("/login", req.url));
   }

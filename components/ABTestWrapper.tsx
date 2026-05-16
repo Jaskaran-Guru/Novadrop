@@ -15,17 +15,17 @@ export function ABTestProvider({ children }: { children: React.ReactNode }) {
   const [variant, setVariant] = useState<Variant>("A");
 
   useEffect(() => {
-    // Assign variant based on session ID (deterministic for same user)
+    
     const sessionId = getSessionId();
     const charCodeSum = sessionId.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
     const assignedVariant: Variant = charCodeSum % 2 === 0 ? "A" : "B";
     
     setVariant(assignedVariant);
     
-    // Cookie to persist across page reloads (nextjs middleware could also handle this)
+    
     document.cookie = `ab_variant=${assignedVariant}; path=/; max-age=31536000`;
     
-    // Track impression
+    
     trackEvent("ab_test_impression", {
       abVariant: assignedVariant,
       metadata: { page: window.location.pathname }

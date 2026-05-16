@@ -28,7 +28,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
           if (!user || !user.password) return null;
 
-          // @ts-ignore: Next.js build cache staleness for Prisma schema enum UserStatus
+          
           if (user.status === "SUSPENDED") {
             throw new Error("Your account has been suspended.");
           }

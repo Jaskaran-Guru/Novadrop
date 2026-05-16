@@ -57,10 +57,10 @@ export default async function ProductsPage({
   return (
     <div className="min-h-screen pt-24 pb-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
+        
         <div className="mb-10">
           <h1 className="text-4xl font-black mb-2">
-            {params.category === "featured" ? "⚡ Featured Picks" : "All Products"}
+            {params.category === "featured" ? " Featured Picks" : "All Products"}
           </h1>
           <p className="text-gray-500">
             {products.length} product{products.length !== 1 ? "s" : ""}
@@ -68,7 +68,7 @@ export default async function ProductsPage({
           </p>
         </div>
 
-        {/* Filters */}
+        
         <div className="flex items-center gap-3 mb-8 overflow-x-auto pb-2">
           <Filter className="w-4 h-4 text-gray-500 shrink-0" />
           {["all", "featured", ...categories].map((cat) => (
@@ -86,7 +86,7 @@ export default async function ProductsPage({
           ))}
         </div>
 
-        {/* Products Grid */}
+        
         {products.length === 0 ? (
           <div className="text-center py-24">
             <Zap className="w-12 h-12 text-purple-400/30 mx-auto mb-4" />
@@ -119,7 +119,7 @@ export default async function ProductsPage({
                     )}
                     {product.featured && (
                       <div className="absolute top-3 right-3 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded-lg">
-                        ⭐
+                        
                       </div>
                     )}
                   </div>

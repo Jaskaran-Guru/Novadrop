@@ -87,7 +87,7 @@ export default function AdminPage() {
         </div>
       </div>
 
-      {/* KPI Cards */}
+      
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {kpiCards.map(({ label, value, icon: Icon, change }) => (
           <div key={label} className="glass rounded-2xl p-6 hover-lift">
@@ -105,9 +105,9 @@ export default function AdminPage() {
         ))}
       </div>
 
-      {/* Main Grid: Revenue + Activity */}
+      
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Revenue Chart */}
+        
         <div className="lg:col-span-2 glass rounded-2xl p-6">
           <h2 className="text-lg font-bold mb-6">Revenue (Last 14 Days)</h2>
           {stats?.dailyChart && stats.dailyChart.length > 0 ? (
@@ -136,15 +136,15 @@ export default function AdminPage() {
           )}
         </div>
 
-        {/* Live Activity Feed */}
+        
         <div className="lg:col-span-1">
           <LiveActivityFeed />
         </div>
       </div>
 
-      {/* Funnel + Orders Bar */}
+      
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Conversion Funnel */}
+        
         <div className="glass rounded-2xl p-6">
           <h2 className="text-lg font-bold mb-6">Conversion Funnel</h2>
           {stats?.funnel && stats.funnel.some((f) => f.count > 0) ? (
@@ -184,7 +184,7 @@ export default function AdminPage() {
           )}
         </div>
 
-        {/* Daily Orders */}
+        
         <div className="glass rounded-2xl p-6">
           <h2 className="text-lg font-bold mb-6">Daily Orders</h2>
           {stats?.dailyChart && stats.dailyChart.length > 0 ? (

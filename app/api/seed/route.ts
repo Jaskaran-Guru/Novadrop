@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 
 export async function POST(req: NextRequest) {
-  // Only allow in non-production or with a secret
+  
   if (process.env.NODE_ENV === "production") {
     const { secret } = await req.json().catch(() => ({ secret: "" }));
     if (secret !== process.env.SEED_SECRET) {
@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    // Create admin user
+    
     const adminPassword = await bcrypt.hash("admin123", 12);
     const admin = await prisma.user.upsert({
       where: { email: "admin@novadrop.com" },
@@ -25,12 +25,12 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Create products
+    
     const products = [
       {
         name: "Premium Wireless Earbuds Pro",
         slug: "premium-wireless-earbuds-pro",
-        description: "Experience crystal-clear audio with our flagship earbuds. Active noise cancellation, 30hr battery life, IPX5 water resistance. Validated by 2000+ customers with 4.9★ rating.",
+        description: "Experience crystal-clear audio with our flagship earbuds. Active noise cancellation, 30hr battery life, IPX5 water resistance. Validated by 2000+ customers with 4.9 rating.",
         price: 2999,
         comparePrice: 4999,
         images: ["https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500"],
@@ -141,7 +141,7 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Create sample ad campaigns
+    
     const campaigns = [
       {
         name: "FB - Summer Collection Launch",

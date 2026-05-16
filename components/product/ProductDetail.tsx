@@ -86,7 +86,7 @@ export function ProductDetail({ product }: { product: Product }) {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-      {/* Images */}
+      
       <div className="space-y-4">
         <div className="aspect-square glass rounded-2xl overflow-hidden relative">
           {product.images[selectedImage] ? (
@@ -114,7 +114,7 @@ export function ProductDetail({ product }: { product: Product }) {
         )}
       </div>
 
-      {/* Info */}
+      
       <div className="space-y-6 pt-4">
         <div>
           <p className="text-sm text-purple-400 uppercase tracking-wider mb-2">{product.category}</p>
@@ -140,7 +140,7 @@ export function ProductDetail({ product }: { product: Product }) {
 
         <p className="text-gray-400 leading-relaxed">{product.description}</p>
 
-        {/* Variants */}
+        
         {product.variants.length > 0 && (
           <div>
             <p className="text-sm font-medium text-gray-300 mb-3">Select Option</p>
@@ -162,7 +162,7 @@ export function ProductDetail({ product }: { product: Product }) {
           </div>
         )}
 
-        {/* Quantity */}
+        
         <div className="flex items-center gap-4">
           <p className="text-sm font-medium text-gray-300">Quantity</p>
           <div className="flex items-center glass rounded-xl">
@@ -183,7 +183,7 @@ export function ProductDetail({ product }: { product: Product }) {
           <span className="text-xs text-gray-500">{product.inventory} in stock</span>
         </div>
 
-        {/* Add to Cart */}
+        
         <div className="space-y-3">
           <button
             onClick={handleAddToCart}
@@ -216,7 +216,7 @@ export function ProductDetail({ product }: { product: Product }) {
           </button>
         </div>
 
-        {/* Trust badges */}
+        
         <div className="grid grid-cols-3 gap-3 pt-4 border-t border-white/5">
           {["Free Shipping", "30-Day Return", "Secure Payment"].map((badge) => (
             <div key={badge} className="text-center">

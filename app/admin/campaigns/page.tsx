@@ -45,7 +45,7 @@ export default async function CampaignsPage() {
         <CampaignDialog mode="create" />
       </div>
 
-      {/* Aggregate KPIs */}
+      
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
           { label: "Total Spend", value: formatPrice(totals.spend), icon: ShoppingCart },
@@ -63,7 +63,7 @@ export default async function CampaignsPage() {
         ))}
       </div>
 
-      {/* Campaigns Table */}
+      
       <div className="glass rounded-2xl overflow-x-auto">
         <table className="w-full min-w-[700px]">
           <thead>
@@ -118,7 +118,7 @@ export default async function CampaignsPage() {
       </div>
 
       <div className="glass rounded-xl p-4 text-sm text-gray-500 border border-purple-500/20">
-        💡 <strong className="text-purple-400">Peak Performance:</strong> Achieved 8 sales/day within 4 days of launch using FB retargeting (ROAS 16x). 
+         <strong className="text-purple-400">Peak Performance:</strong> Achieved 8 sales/day within 4 days of launch using FB retargeting (ROAS 16x). 
         A/B tested creatives showed 40% CTR improvement with video vs static. Lookalike audiences reduced CAC by 32%.
       </div>
     </div>

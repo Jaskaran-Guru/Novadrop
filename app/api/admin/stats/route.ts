@@ -76,7 +76,7 @@ export async function GET() {
       dailyData[date].revenue += row._sum.total || 0;
     });
 
-    // If no data exists in DB, fallback to mock stats and set mocked flag
+    
     if (totalOrders === 0 && totalRevenueVal === 0) {
       return NextResponse.json({ ...FALLBACK_STATS, mocked: true });
     }
@@ -103,7 +103,7 @@ export async function GET() {
     });
   } catch (error) {
     console.error("Admin stats error:", error);
-    // Silent fallback to simulation mode
+    
     return NextResponse.json({ ...FALLBACK_STATS, mocked: true });
   }
 }
