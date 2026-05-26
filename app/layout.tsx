@@ -21,6 +21,7 @@ export const metadata: Metadata = {
 
 import { ABTestProvider } from "@/components/ABTestWrapper";
 import { MetaPixel } from "@/components/MetaPixel";
+import { SupportChat } from "@/components/ui/SupportChat";
 
 export default function RootLayout({
   children,
@@ -36,6 +37,7 @@ export default function RootLayout({
             <Navbar />
             <main>{children}</main>
             <Toaster />
+            <SupportChat />
           </ABTestProvider>
         </SessionProvider>
       </body>

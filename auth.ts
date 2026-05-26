@@ -13,10 +13,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
+        code: { label: "2FA Code", type: "text" },
       },
       async authorize(credentials) {
         const parsed = z
-          .object({ email: z.string().email(), password: z.string().min(6) })
+          .object({ 
+            email: z.string().email(), 
+            password: z.string().min(6),
+            code: z.string().optional()
+          })
           .safeParse(credentials);
 
         if (!parsed.success) return null;
@@ -28,7 +33,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
           if (!user || !user.password) return null;
 
-          
           if (user.status === "SUSPENDED") {
             throw new Error("Your account has been suspended.");
           }
@@ -38,6 +42,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             user.password
           );
           if (!isValid) return null;
+
+          // Multi-factor authentication check
+          if (user.twoFactorEnabled) {
+            const otpCode = parsed.data.code;
+            if (!otpCode) {
+              throw new Error("2FA_REQUIRED");
+            }
+            const { verify2FAToken } = await import("@/lib/twofactor");
+            const is2FAValid = verify2FAToken(user.twoFactorSecret || "", otpCode);
+            if (!is2FAValid) {
+              throw new Error("INVALID_2FA_CODE");
+            }
+          }
 
           return { id: user.id, email: user.email, name: user.name, role: user.role };
         } catch (error: any) {

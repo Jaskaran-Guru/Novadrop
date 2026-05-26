@@ -12,19 +12,27 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String    @unique
-  emailVerified DateTime?
-  password      String?
-  image         String?
-  role          Role      @default(CUSTOMER)
-  status        UserStatus @default(ACTIVE)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  orders        Order[]
-  accounts      Account[]
-  sessions      Session[]
+  id                 String    @id @default(cuid())
+  name               String?
+  email              String    @unique
+  emailVerified      DateTime?
+  password           String?
+  image              String?
+  role               Role      @default(CUSTOMER)
+  status             UserStatus @default(ACTIVE)
+  twoFactorEnabled   Boolean   @default(false)
+  twoFactorSecret    String?   @db.Text
+  savedPreferences   Json?     @default("{}")
+  verificationToken  String?   @db.Text
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  orders             Order[]
+  accounts           Account[]
+  sessions           Session[]
+  addresses          Address[]
+  reviews            Review[]
+  wishlist           WishlistItem[]
+  tickets            Ticket[]
 }
 
 model Account {
@@ -69,6 +77,8 @@ model Product {
   inventory   Int              @default(0)
   variants    ProductVariant[]
   orderItems  OrderItem[]
+  reviews     Review[]
+  wishlist    WishlistItem[]
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
 }
@@ -211,4 +221,59 @@ enum ExperimentStatus {
 enum UserStatus {
   ACTIVE
   SUSPENDED
+}
+
+model Address {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type        String   // "SHIPPING" or "BILLING"
+  line1       String
+  line2       String?
+  city        String
+  state       String
+  postalCode  String
+  country     String
+  isDefault   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Review {
+  id          String   @id @default(cuid())
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  name        String
+  rating      Int
+  comment     String   @db.Text
+  verified    Boolean  @default(false)
+  helpfulCount Int     @default(0)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model WishlistItem {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, productId])
+}
+
+model Ticket {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  orderId   String?
+  category  String
+  message   String   @db.Text
+  status    String   @default("OPEN")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

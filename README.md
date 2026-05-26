@@ -1,112 +1,115 @@
-# Novadrop 
+# Novadrop — High-Performance D2C E-Commerce Storefront & Admin Hub
 
-## Project Overview
+Novadrop is a data-driven, state-of-the-art Direct-to-Consumer (D2C) e-commerce platform designed for rapid product validation, high-conversion direct checkout, smart automation, and full-funnel optimization.
 
-This repository contains a data-driven Direct-to-Consumer (D2C) e-commerce platform designed for rapid product validation, scalable growth, and full-funnel optimization. The system is built with modern web technologies and integrates seamlessly with external marketing and payment services.
+Equipped with a sleek, dark-themed, glassmorphic design system and mobile-first responsive interfaces, it features built-in A/B experimentation engines, predictive analytics, direct order generation, and an automated customer support widget.
 
-## Architecture and Tech Stack
+---
 
-### Frontend
-- Framework: Next.js (App Router)
-- UI Library: React
-- Styling: Tailwind CSS
-- Animation: Framer Motion
+## 🌟 Core Features & Architecture
 
-### Backend
-- Framework: Next.js API Routes
-- ORM: Prisma
-- Database: PostgreSQL
-- Caching and Sessions: Redis
+### 💳 1. One-Page Direct Checkout
+- **Gate-Free Buying Flow:** Allows users and guests to instantly confirm orders via Card, UPI (with responsive QR simulator scan-timing), or Cash on Delivery (COD) without external redirect friction.
+- **Fulfillment Stepper:** Instantly creates order items in the PostgreSQL DB, waived handling options for orders > ₹999, and triggers cart purge.
 
-### Third-Party Integrations
-- Payments: Stripe
-- Analytics: Google Analytics 4, Server-side event tracking
-- Marketing: Meta Pixel
+### 📦 2. Order Tracking Timeline & Refunds
+- **Interactive Tracking:** Fully responsive progress stepper (`PENDING` ➔ `PAID` ➔ `PROCESSING` ➔ `SHIPPED` ➔ `DELIVERED`).
+- **Return Portal:** Customer-facing refund/return dashboard allowing single-click exchange requests with timeline validation.
 
-## Prerequisites
+### 🤖 3. Global AI Support Companion (Nova Support Bot)
+- **Conversational Helper:** Globally mounted conversational assistant supporting quick questions, smart fallback help, automatic unread counters, and instant responses.
 
-Ensure you have the following installed on your local development environment:
+### 🛡️ 4. Unified Admin Suite
+- **User Suspension Hub (`/admin/users`):** Elevate customers to `ADMIN` status, suspend fraudulent actors, or delete records.
+- **Product Catalog Drawer (`/admin/products`):** Edit pricing details, original compare references, live inventory stock levels, featured hero banner promotes, or toggle archive status.
+- **Reviews Moderation Control (`/admin/reviews`):** Comprehensive view of reviewer verified-buyer badges, helpful counts, stars, and optimistic visibility toggles.
+
+### 🔐 5. 2FA Security & Password Recovery
+- **2-Factor Authentication:** Secure TOTP credentials matching directly embedded into standard credential logins.
+- **Forgot Password Workflow:** Automated reset tokens, verification views, and password changes.
+
+---
+
+## 🛠️ Architecture and Tech Stack
+
+- **Framework:** Next.js 16 (App Router, Turbopack, Dynamic Server Actions)
+- **UI & State:** React 19, Zustand state store, Lucide Icons, Framer Motion
+- **Styling:** CSS Variables, Tailwind CSS
+- **Database / ORM:** Prisma ORM with PostgreSQL database
+- **Security / Session:** NextAuth.js (v5 Beta credentials, 2FA validation)
+- **Marketing / Analytics:** Built-in A/B split-testing engine, server-side GA4, and Meta Pixel hooks
+
+---
+
+## 🚀 Installation & Local Setup
+
+### 1. Prerequisites
+Ensure you have the following installed on your machine:
 - Node.js (version 18.x or later)
-- PostgreSQL
-- Redis
-- npm or yarn
+- PostgreSQL database instance
+- Redis server (optional, for session cache)
 
-## Installation
+### 2. Quickstart
+```bash
+# 1. Clone the repository
+git clone https://github.com/Jaskaran-Guru/Novadrop.git
+cd Novadrop
 
-1. Clone the repository to your local machine.
-2. Navigate to the project directory.
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
+# 2. Install dependencies
+npm install
 
-## Configuration
-
-Create a `.env` file in the root of your project and populate it with the required environment variables:
-
-```env
-DATABASE_URL="postgresql://username:password@localhost:5432/ecommerce?schema=public"
-REDIS_URL="redis://localhost:6379"
-STRIPE_SECRET_KEY="sk_test_..."
-STRIPE_WEBHOOK_SECRET="whsec_..."
-NEXT_PUBLIC_META_PIXEL_ID="your_pixel_id"
-NEXTAUTH_SECRET="your_nextauth_secret"
-NEXTAUTH_URL="http://localhost:3000"
+# 3. Setup environment variables (Create .env)
+cp .env.example .env # Or create a custom .env file
 ```
 
-## Running the Application
-
-### Development Mode
-
-To start the development server, run:
-
+### 3. Database Push & Seeding
+Configure your `DATABASE_URL` in `.env`, then sync and seed tables:
 ```bash
-npm run dev
-```
-The application will be accessible at `http://localhost:3000`.
-
-### Database Migrations
-
-To apply database schema changes, run:
-
-```bash
+# Sync prisma schemas
 npx prisma db push
-```
 
-To seed the database with initial data:
+# Generate client
+npx prisma generate
 
-```bash
+# Seed initial store catalog
 npx prisma db seed
 ```
 
-### Production Build
+### 4. Running the Dev Server
+```bash
+npm run dev
+# Server runs at http://localhost:3000
+```
 
-To build the application for production:
+---
+
+## 📊 Deployment & Production Build
+
+Novadrop is configured to perform strict TypeScript validation and Turbopack optimizations during build-time:
 
 ```bash
+# Run TypeScript compilation checks
+npx tsc --noEmit
+
+# Compile production-optimized build
 npm run build
+
+# Spin up production server
+npm run start
 ```
 
-To start the production server:
+---
 
-```bash
-npm start
+## 📁 Key Project Structure
+
 ```
-
-## Project Structure
-
-- `/app`: Contains all Next.js App Router pages and API endpoints.
-- `/components`: Reusable React components.
-- `/lib`: Utility functions, database configuration, and external service clients.
-- `/prisma`: Database schema definitions and seed scripts.
-- `/public`: Static assets.
-
-## Core Modules
-
-1. Storefront: Optimized landing pages for rapid load times and high conversion rates.
-2. Product Management: Admin controls for inventory, variants, and pricing.
-3. Checkout System: Seamless payment processing via Stripe.
-4. Analytics Dashboard: Centralized view of key metrics including Conversion Rate and Return on Ad Spend (ROAS).
-5. Experimentation Engine: Built-in A/B testing for traffic splitting and performance comparison.
-
-.
+├── app/
+│   ├── account/          # Customer dashboards, address book, password settings, tracking
+│   ├── admin/            # Orders, products catalog, users manager, campaigns, analytics
+│   ├── api/              # Secure Next.js dynamic endpoints and OAuth route modules
+│   ├── checkout/         # Direct secure checkout flow
+│   └── products/         # Main catalog grid and dynamic item showcases
+├── components/           # Modular visual parts (SupportChat, FilterControls, Navbar)
+├── lib/                  # State management store (Zustand), database (Prisma client)
+└── prisma/               # Models (User, Product, Order, Review, AnalyticsEvent)
+```

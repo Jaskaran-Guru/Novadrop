@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { LayoutDashboard, Package, ShoppingBag, BarChart2, Megaphone, Zap, Users } from "lucide-react";
+import { LayoutDashboard, Package, ShoppingBag, BarChart2, Megaphone, Zap, Users, Star } from "lucide-react";
 import { SimulationIndicator } from "@/components/admin/SimulationIndicator";
 
 export default async function AdminLayout({
@@ -21,6 +21,7 @@ export default async function AdminLayout({
     { href: "/admin/analytics", label: "Analytics", icon: BarChart2 },
     { href: "/admin/users", label: "Users", icon: Users },
     { href: "/admin/campaigns", label: "Campaigns", icon: Megaphone },
+    { href: "/admin/reviews",   label: "Reviews",   icon: Star },
   ];
 
   return (
